@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body style="padding:15px;">
+    <h2>Event Listeners (Leaky)</h2>
+    <p style="width:400px;">
+      Event Listeners are now removed (in modern browsers) when the corresponding element is 
+      removed, provided no references to the element is kept, so removing listeners is no 
+      longer strictly necessary.
+    </p>
+    <div id="test"></div>
+    <button id="start">Start!</button>
+    <br /><br />
+
+    <script>
+      document.getElementById('start').addEventListener('click', function(e) {
+        // **** Offending code, by attaching this to an existing element, they cannot be cleaned
+        e.target.items = main()
+        
+        // Add items to DOM
+        for (var i = 0; i < e.target.items.length; i++) {
+          document.body.appendChild(e.target.items[i])
+        }
+        
+        // Remove items from DOM
+        setTimeout(function () {
+          for (var i = 0; i < e.target.items.length; i++) {
+            document.body.removeChild(e.target.items[i])
+          }
+        }, 100)
+      })
+
+      function main() {
+        // Get values from page
+        var count = 10000
+        
+        var items = []
+        for (var i = 0; i < count; i++) {
+          var div = document.createElement('div')
+          
+          div.addEventListener('click', function(e) {
+            console.log(e.target)
+          })
+          
+          items.push(div)
+        }
+        
+        return items
+      }
+      
+    </script>
+    <div><img src="images/event-listeners-leaky.png" /></div>
+  </body>
+</html>

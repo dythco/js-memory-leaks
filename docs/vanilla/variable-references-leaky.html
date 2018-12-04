@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body style="padding:15px;">
+    <h2>Variable References (Leaky)</h2>
+    <p style="width:400px;">
+      Variable references can be forced to stay active when scopes are shared with anonymous functions
+    </p>
+    <button onclick="main()">Start!</button>
+    <button onclick="stop()">Stop!!!</button>
+    <br /><br />
+
+    <script>
+      var interval
+      function main() {
+        var item = null
+        var renderItem = function () {
+          var itemReference = item
+          var classFunction = function () {
+            if (itemReference) {
+              // Do something useful
+            }
+          }
+
+          item = {data: new Array(300000).join('*'), doStuff: function () {console.log('Do Stuff!')}}
+        }
+
+        interval = setInterval(function() {
+          renderItem()
+          item.doStuff()
+        }, 10)
+      }
+
+      function stop() {
+        clearInterval(interval)
+      }
+    </script>
+    <div><img src="images/variable-references-leaky.png" /></div>
+  </body>
+</html>

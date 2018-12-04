@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body style="padding:15px;">
+    <h2>Detached DOM Nodes (Clean)</h2>
+    <p style="width:400px;">
+      This will create a number of elements that are attached to a DOM node outside of the tree
+      which contain their own data and will never been garbage collected.
+    </p>
+    <div id="test"></div>
+    <button onclick="main()">Start!</button>
+    <br /><br />
+
+    <script>
+      function main() {
+        // **** All variables are local, element reference can be cleaned up ****
+        var element = document.getElementById('test')
+        var count = 1000, size = 10000
+
+        // Create a  bunch of nodes
+        for (var i = 0; i < count; i++) {
+          var div = document.createElement('div')
+          div.data = new Array(size)
+
+          for (var i2 = 0; i2 < div.data.length; i2++) {
+            div.data[i2] = i2.toString()
+          }
+
+          element.appendChild(div)
+        }
+
+        // Remove element
+        document.body.removeChild(element)
+      }
+    </script>
+    <div><img src="images/detached-dom-clean.png" /></div>
+  </body>
+</html>

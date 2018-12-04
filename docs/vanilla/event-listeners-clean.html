@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body style="padding:15px;">
+    <h2>Event Listeners (Clean)</h2>
+    <p style="width:400px;">
+      Event Listeners are now removed (in modern browsers) when the corresponding element is 
+      removed, provided no references to the element is kept, so removing listeners is no 
+      longer strictly necessary.  Some memory will be freed when the elements are removed from 
+      the DOM.
+    </p>
+    <div id="test"></div>
+    <div>Number of Elements: </label><input type="text" id="count" value="10000" /></div>
+    <br />
+    <button id="start">Start!</button>
+    <br /><br />
+
+    <script>
+      document.getElementById('start').addEventListener('click', function(e) {
+        // With local variables, listeners are moved when the elements are
+        var items = main()
+        
+        // Add items to DOM
+        for (var i = 0; i < items.length; i++) {
+          document.body.appendChild(items[i])
+        }
+        
+        // Remove items from DOM
+        setTimeout(function () {
+          for (var i = 0; i < items.length; i++) {
+            document.body.removeChild(items[i])
+          }
+        }, 100)
+      })
+
+      function main() {
+        // Get values from page
+        var count = 10000
+        
+        var items = []
+        for (var i = 0; i < count; i++) {
+          var div = document.createElement('div')
+          
+          div.addEventListener('click', function(e) {
+            console.log(e.target)
+          })
+          
+          items.push(div)
+        }
+        
+        return items
+      }
+      
+    </script>
+    <div><img src="images/event-listeners-clean.png" /></div>
+  </body>
+</html>

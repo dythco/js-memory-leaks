@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body style="padding:15px;">
+    <h2>Scope Seepage (Clean)</h2>
+    <p style="width:400px;">
+      It's easy to accidentally drop references into the root object where they cannot be cleaned.
+    </p>
+    <button onclick="main()">Start!</button>
+    <br /><br />
+
+    <script>
+      var SomeClass = function SomeClass() {
+        this.createStuff = function(count) {
+          this.variables = []
+          for (var i = 0; i < count; i++) {
+            this.variables.push('Some string data')
+          }
+        }
+      }
+      
+      function main() {
+        var count = 100000
+        var instance = new SomeClass()
+
+        // Created within scope of SomeClass with proper usage and cleaned up
+        instance.createStuff(count)
+      }
+      
+    </script>
+    <div><img src="images/scope-seepage-clean.png" /></div>
+  </body>
+</html>
